@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/mumu-zbus.iml" filepath="$PROJECT_DIR$/mumu-zbus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mumu-zbus-mq/mumu-zbus-mq.iml" filepath="$PROJECT_DIR$/mumu-zbus-mq/mumu-zbus-mq.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mumu-zbus-rpc/mumu-zbus-rpc.iml" filepath="$PROJECT_DIR$/mumu-zbus-rpc/mumu-zbus-rpc.iml" />
+    </modules>
+  </component>
+</project>
