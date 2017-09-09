@@ -16,17 +16,25 @@ import java.util.concurrent.CountDownLatch;
 public class ZbusProduce {
 
     /**
-     * 发送同步消息
+     * 消息发送
      * @param message 消息内容
      */
     public Message sendMessage(String message){
         ZbusBroker broker=null;
         try {
             broker = new ZbusBroker(ZbusConfiguration.brokerAddress);
-            Producer producer=new Producer(broker,ZbusConfiguration.mqName, Protocol.MqMode.MQ);
+            Producer producer=new Producer(broker,ZbusConfiguration.MQNAME, Protocol.MqMode.MQ);
             producer.createMQ();//如果这个mq不存在  则创建
-            Message message1 = producer.sendSync(new Message(message));
-            return message1;
+            Message msg = new Message(message);
+            msg.setTopic(ZbusConfiguration.topicName);
+            //异步消息发送
+            /*producer.sendAsync(msg,new Sync.ResultCallback(){
+                @Override
+                public void onReturn(Object o) {
+                    System.out.println("消息发送成功"+o);
+                }
+            });*/
+            return producer.sendSync(msg);
         } catch (IOException |InterruptedException  e) {
             e.printStackTrace();
         }finally {
@@ -48,9 +56,11 @@ public class ZbusProduce {
         ZbusBroker broker=null;
         try {
             broker = new ZbusBroker(ZbusConfiguration.brokerAddress);
-            Producer producer=new Producer(broker,ZbusConfiguration.mqName, Protocol.MqMode.MQ);
+            Producer producer=new Producer(broker,ZbusConfiguration.MQNAME, Protocol.MqMode.MQ);
             producer.createMQ();//如果这个mq不存在  则创建
-            producer.sendAsync(new Message(message),new Sync.ResultCallback(){
+            Message msg = new Message(message);
+            msg.setTopic(ZbusConfiguration.topicName);
+            producer.sendAsync(msg,new Sync.ResultCallback(){
                 @Override
                 public void onReturn(Object o) {
                     System.out.println("消息发送成功"+o);

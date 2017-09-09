@@ -1,0 +1,46 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+
+	<!-- 暴露的的接口实现示例 -->
+	<bean id="interface" class="com.lovecws.mumu.zbus.rpc.service.HelloworldServiceImpl"></bean>
+	
+	<bean id="serviceProcessor" class="org.zbus.rpc.RpcProcessor">
+		<constructor-arg>
+			<list>
+				<!-- 放入你需要的暴露的的接口 -->
+				<ref bean="interface"/>
+			</list>
+		</constructor-arg>
+	</bean>
+	 
+	<bean id="broker" class="org.zbus.broker.ZbusBroker">
+		<constructor-arg>
+			<bean class="org.zbus.broker.BrokerConfig">
+				<property name="brokerAddress" value="127.0.0.1:15555" />
+				<property name="maxTotal" value="20"/>
+				<!-- 这里可以增加连接池参数配置，不配置使用默认值（参考commons-pool2） -->
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 默认调用了start方法，由Spring容器直接带起来注册到zbus总线上 -->
+	<bean id="myrpcService" class="org.zbus.rpc.mq.Service" init-method="start">
+		<constructor-arg>  
+			<bean class="org.zbus.rpc.mq.ServiceConfig">
+			    <!-- 支持多总线注册 -->
+				<constructor-arg> 
+					<list>
+						<ref bean="broker"/> 
+					</list>
+				</constructor-arg>  
+				<property name="mq" value="MyRpc"/>
+				<property name="consumerCount" value="4"></property>
+				<property name="messageProcessor" ref="serviceProcessor"/>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+</beans>

@@ -1,9 +1,16 @@
 package com.lovecws.mumu.zbus.mq;
 
+import com.lovecws.mumu.zbus.ZbusConfiguration;
+import org.junit.Before;
 import org.junit.Test;
 import org.zbus.net.http.Message;
 
 public class ZbusProduceDemo {
+
+    @Before
+    public void before(){
+        //ZbusConfiguration.start();
+    }
 
     @Test
     public void sendMessage(){

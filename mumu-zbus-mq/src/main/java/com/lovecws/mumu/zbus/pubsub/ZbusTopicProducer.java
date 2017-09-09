@@ -29,7 +29,7 @@ public class ZbusTopicProducer {
             BrokerConfig brokerConfig = new BrokerConfig();
             brokerConfig.setBrokerAddress(ZbusConfiguration.brokerAddress);
             broker = new SingleBroker(brokerConfig);
-            Producer producer = new Producer(broker, ZbusConfiguration.mqName, Protocol.MqMode.PubSub);
+            Producer producer = new Producer(broker, ZbusConfiguration.PUBSUBMQNAME, Protocol.MqMode.PubSub);
             producer.createMQ();
 
             Message msg = new Message();
@@ -64,7 +64,7 @@ public class ZbusTopicProducer {
         try {
             broker = new SingleBroker(config);
             //2) 创建生产者
-            Producer p = new Producer(broker, ZbusConfiguration.mqName, Protocol.MqMode.PubSub);
+            Producer p = new Producer(broker, ZbusConfiguration.PUBSUBMQNAME, Protocol.MqMode.PubSub);
             p.createMQ();
 
             Message msg = new Message();

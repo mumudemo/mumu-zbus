@@ -1,0 +1,38 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+
+ 	<bean id="broker" class="org.zbus.broker.ZbusBroker">
+		<constructor-arg>
+			<bean class="org.zbus.broker.BrokerConfig">
+				<property name="brokerAddress" value="127.0.0.1:15555" /> 
+				<!-- 
+				高可用HA只需要改变brokerAddress为trackServer地址列表，注意： 如果是单个tracker地址末尾要有分号 
+				<property name="brokerAddress" value="127.0.0.1:16666;127.0.0.1:16667" /> 
+				-->
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="myrpc" class="org.zbus.rpc.RpcFactory">
+		<constructor-arg> 
+			<bean class="org.zbus.rpc.mq.MqInvoker"> 
+				<constructor-arg ref="broker"/>
+				<constructor-arg value="MyRpc"/> 
+			</bean>
+		</constructor-arg>
+	</bean>
+ 
+	<bean id="interface" factory-bean="myrpc" factory-method="getService">
+		<constructor-arg type="java.lang.Class" value="com.lovecws.mumu.zbus.rpc.service.HelloworldService"/>
+		<!-- 当需要个性化调用的时候指定
+		<constructor-arg>
+			<bean class="org.zbus.rpc.RpcConfig">
+				<property name="module"  value="org.zbus.rpc.biz.Interface"/>
+			</bean>
+		</constructor-arg>
+		 -->
+	</bean>  
+</beans>

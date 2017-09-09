@@ -21,7 +21,7 @@ public class ZbusConsumer {
     public void receiveMessage(){
         try {
             ZbusBroker broker=new ZbusBroker(ZbusConfiguration.brokerAddress);
-            Consumer consumer=new Consumer(broker,ZbusConfiguration.mqName, Protocol.MqMode.MQ);
+            Consumer consumer=new Consumer(broker,ZbusConfiguration.MQNAME, Protocol.MqMode.MQ);
             consumer.createMQ();//创建mq
             consumer.start();
             consumer.onMessage(new Consumer.ConsumerHandler() {
@@ -44,7 +44,7 @@ public class ZbusConsumer {
     public void takeMessage(){
         try {
             ZbusBroker broker=new ZbusBroker(ZbusConfiguration.brokerAddress);
-            Consumer consumer=new Consumer(broker,ZbusConfiguration.mqName, Protocol.MqMode.MQ);
+            Consumer consumer=new Consumer(broker,ZbusConfiguration.MQNAME, Protocol.MqMode.MQ);
             consumer.createMQ();//创建mq
             consumer.start();
             while (true){

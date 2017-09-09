@@ -30,7 +30,7 @@ public class ZbusTopicConsumer {
 
             MqConfig config = new MqConfig();
             config.setBroker(broker);
-            config.setMq(ZbusConfiguration.mqName);
+            config.setMq(ZbusConfiguration.PUBSUBMQNAME);
             config.setTopic(ZbusConfiguration.topicName);
             config.setMode(Protocol.MqMode.PubSub);
 

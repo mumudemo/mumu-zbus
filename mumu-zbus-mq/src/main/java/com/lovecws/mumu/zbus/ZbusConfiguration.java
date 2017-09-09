@@ -6,10 +6,12 @@ import org.zbus.mq.server.MqServerConfig;
 public class ZbusConfiguration {
 
     public static String brokerAddress="localhost:15555";
-    public static String mqName="babymm";
+    public static String MQNAME="babymmMQ";
+
+    public static String PUBSUBMQNAME="babymmPUBSUB";
     public static String topicName="babymmTopic";
 
-    static {
+    public static void start(){
         MqServerConfig config = new MqServerConfig();
         config.serverPort = 15555;
         config.storePath = "./store";
